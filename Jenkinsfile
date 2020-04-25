@@ -40,12 +40,12 @@ pipeline {
         	stage('Deploy blue & Green container') {
             		steps {
                           sshagent(['Project']) {
-                             sh "scp -o StrictHostKeyChecking=no  blue-controller.yaml green-controller.yaml blue-service.yaml  ubuntu@ec2-52-27-216-237.us-west-2.compute.amazonaws.com:/home/ubuntu/"
+                             sh "scp -o StrictHostKeyChecking=no  blue-controller.yaml green-controller.yaml blue-service.yaml  ubuntu@ip-172-31-26-144:/home/ubuntu/"
                              script{
                                 try{
-	                            sh "ssh ubuntu@ec2-52-27-216-237.us-west-2.compute.amazonaws.com48 sudo kubectl apply -f ."
+	                            sh "ssh ubuntu@ip-172-31-26-144 sudo kubectl apply -f ."
 	                     }catch(error){
-	                            sh "ssh ubuntu@ec2-52-27-216-237.us-west-2.compute.amazonaws.com sudo kubectl create -f ."
+	                            sh "ssh ubuntu@ip-172-31-26-144 sudo kubectl create -f ."
                                           }
                             }
                          }
@@ -61,12 +61,12 @@ pipeline {
                 stage('Create the service in the cluster, redirect to green') {
                         steps {
                           sshagent(['Project']) {
-                             sh "scp -o StrictHostKeyChecking=no  green-service.yaml ubuntu@ec2-52-27-216-237.us-west-2.compute.amazonaws.com:/home/ubuntu/run/"
+                             sh "scp -o StrictHostKeyChecking=no  green-service.yaml ubuntu@ip-172-31-26-144:/home/ubuntu/run/"
                              script{
                                 try{
-	                            sh "ssh ubuntu@ec2-52-27-216-237.us-west-2.compute.amazonaws.com sudo kubectl apply -f ."
+	                            sh "ssh ubuntu@ip-172-31-26-144 sudo kubectl apply -f ."
 	                     }catch(error){
-	                            sh "ssh ubuntu@ec2-52-27-216-237.us-west-2.compute.amazonaws.com sudo kubectl create -f ."
+	                            sh "ssh ubuntu@ip-172-31-26-144 sudo kubectl create -f ."
                                           }
                             }
                          }
