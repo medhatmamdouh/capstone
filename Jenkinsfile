@@ -57,7 +57,7 @@ pipeline {
     stage('Create the service in the cluster, redirect to green') {
       steps {
         sshagent(credentials: ['Project']) {
-          sh 'scp -o StrictHostKeyChecking=no blue-service.yaml ubuntu@ip-172-31-26-144:/home/ubuntu/run/'
+          sh 'scp -o StrictHostKeyChecking=no green-service.yaml ubuntu@ip-172-31-26-144:/home/ubuntu/run/'
           script {
             try{
               sh "ssh ubuntu@ip-172-31-26-144 sudo kubectl apply -f ."
